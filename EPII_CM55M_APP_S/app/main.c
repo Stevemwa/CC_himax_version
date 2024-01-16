@@ -216,3 +216,15 @@ int main(void)
 	return 0;
 }
 #endif
+
+#ifdef GROVE_VISION_AI
+#include "grove_vision_ai.h"
+
+/** main entry */
+int main(void)
+{
+	board_init();
+	app_main();
+	return 0;
+}
+#endif
