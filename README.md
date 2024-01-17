@@ -60,6 +60,12 @@ This part explains how you can flash the firmware to Grove Vision AI Module V2.
             - please check xmodem protocol is supported.
 
     ```
-    python flasher.py "~/output.img" COM24
+    pip install xmodem --user
+    python flasher.py we2_image_gen_local/output_case1_sec_wlcsp/output.img COM3
+    ```
+
+    ```
+    pip install playsound --user
+    python getdate.py
     ```
 

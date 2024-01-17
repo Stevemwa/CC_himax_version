@@ -20,7 +20,7 @@ from playsound import playsound
 #         except serial.serialutil.SerialException:
 #             pass
 #         i+=1
-ser = serial.Serial("COM57", 921600, timeout=5)
+ser = serial.Serial("COM27", 921600, timeout=5)
 ser.flushInput()  # Empty the buffer
 
 
@@ -86,8 +86,8 @@ if __name__ == '__main__':
     # get_com()
     getdata()
     pcm2wav('record.txt', 'record.wav')
-    b=input('Type enter to start playback')
-    if b=='':
-        playsound('record.wav')
-        #    pcm2wav(sys.argv[1], sys.argv[2])
+    # b=input('Type enter to start playback')
+    # if b=='':
+    #     playsound('record.wav')
+    #     #    pcm2wav(sys.argv[1], sys.argv[2])
     print("If you can hear the recording, test PASS! Otherwise test Fail!")
