@@ -20,24 +20,24 @@ Note: The following has been tested to work on Ubuntu 20.04 PC
     ```
     export PATH="$HOME/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/:$PATH"
     ```
-- Step 5: Clone the following repository and go into Seeed_Grove_Vision_AI_Module_V2 folder
-    ```
-    git clone https://github.com/HimaxWiseEyePlus/Seeed_Grove_Vision_AI_Module_V2
-    cd Seeed_Grove_Vision_AI_Module_V2
-    ```
-- Step 6: Compile the firmware
+- Step 5: Compile the firmware
     ```
     cd EPII_CM55M_APP_S
+    ```
+    You need to change the path inside the makefile to the path of the compiler. Such as:
+    ```
+    GNU_TOOLPATH ?= /mnt/c/Users/mengd/Desktop/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/
+    ```
+    Then,
+    ```
     make clean
     make
     ```
 - Output elf file: `./obj_epii_evb_icv30_bdv10/gnu_epii_evb_WLCSP65/EPII_CM55M_gnu_epii_evb_WLCSP65_s.elf`
     ![alt text](images/output_elf_file.png)
-- Step 7: Generate firmware image file
+- Step 6: Generate firmware image file
     ```
-    cd ../we2_image_gen_local/
-    cp ../EPII_CM55M_APP_S/obj_epii_evb_icv30_bdv10/gnu_epii_evb_WLCSP65/EPII_CM55M_gnu_epii_evb_WLCSP65_s.elf input_case1_secboot/
-    ./we2_local_image_gen project_case1_blp_wlcsp.json
+    ./output.sh
     ```
 - Output firmware image: `./output_case1_sec_wlcsp/output.img`
     ![alt text](images/output_image.png)
@@ -59,13 +59,7 @@ This part explains how you can flash the firmware to Grove Vision AI Module V2.
             - Flow control	none
             - please check xmodem protocol is supported.
 
-### Flash Image Update at Windows Environment
-Following steps update application in the flash.
-- Step 1: Open TeraTerm and select File -> New connection, connect to Grove Vision AI Module V2.
-    ![alt text](images/flash_update_1.png)
-- Step 2: Hold down any key on the keyboard (except the Enter key) and press the reset button to reset Grove Vision AI Module V2 and the startup options will be displayed.
-    ![alt text](images/flash_update_2.png)
-- Step 3: Press button “1” and Grove Vision AI Module V2 will enter receiving mode after then. Select target flash image(output.img) by File->Transfer->XMODEM->Send. 
-    ![alt text](images/flash_update_3.png)
-- Step 4: After the firmware image burning is completed, the message "Do you want to end file transmission and reboot system? (y)" is displayed. Press button “y” to restart.
-    ![alt text](images/flash_update_4.png)
+    ```
+    python flasher.py "~/output.img" COM24
+    ```
+

@@ -44,7 +44,7 @@ TOOLCHAIN ?= gnu
 # Definition of Tool Paths
 ##
 ARM_TOOLPATH ?=
-GNU_TOOLPATH ?=
+GNU_TOOLPATH ?= /mnt/c/Users/mengd/Desktop/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/
 #ARM_TOOLPATH ?= C:/Program Files/Arm/Development Studio 2020.1/sw/ARMCompiler6.15/bin
 #GNU_TOOLPATH ?= D:/Project/WE-II/CMSIS/cmsis_tool/gcc-arm-none-eabi-10-2020-q4-major-win32/gcc-arm-none-eabi-10-2020-q4-major/bin
 
