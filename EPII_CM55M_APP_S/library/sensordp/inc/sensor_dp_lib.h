@@ -247,8 +247,8 @@ typedef enum
 	SENSORDPLIB_STREAM_HM01B0_CONT,			/*!< HM01B0 Continuous mode streaming by HW-Trigger pin*/
 	SENSORDPLIB_STREAM_HM0360_CONT,			/*!< HM0360 Continuous mode streaming by HW-Trigger pin but WE-1 do not output MCLK*/
 	SENSORDPLIB_STREAM_HM0360_BURST,		/*!< HM0360 Burst mode streaming by HW-Trigger pin but WE-1 do not output MCLK*/
-	SENSORDPLIB_STREAM_HM0360_SENSOR_ACT,  	/*!< 5.1.4	Senctrl Mode 4: Automatic wake-up mode(sensor active) ¡V HM0360(Motion detect)*/
-	SENSORDPLIB_STREAM_HM0360_WE1_ACT,		/*!< 5.1.5	Senctrl Mode 5: Automatic wake-up mode(WE-I ACTIVE) ¡V HM0360(Automatic output frame and sleep)*/
+	SENSORDPLIB_STREAM_HM0360_SENSOR_ACT,  	/*!< 5.1.4	Senctrl Mode 4: Automatic wake-up mode(sensor active) - HM0360(Motion detect)*/
+	SENSORDPLIB_STREAM_HM0360_WE1_ACT,		/*!< 5.1.5	Senctrl Mode 5: Automatic wake-up mode(WE-I ACTIVE) - HM0360(Automatic output frame and sleep)*/
 	SENSORDPLIB_STREAM_HM0360_CONT_MCLK,    /*!< HM0360 Continuous mode streaming by HW-Trigger pin and WE-1 output MCLK*/
 	SENSORDPLIB_STREAM_HM0360_BURST_MCLK,   /*!< HM0360 Burst mode streaming by HW-Trigger pin and WE-1 output MCLK*/
 	SENSORDPLIB_STREAM_HM11B1_LOWPOWER,      /*!< HM11B1 Continuous mode streaming by HW-xSleep pin*/
@@ -377,6 +377,16 @@ typedef enum
 	SENSORDPLIB_STATUS_TIMER_FIRE_APP_NOTREADY	= 8,	/*!< Timer Fire but app not ready for frame */
 	SENSORDPLIB_STATUS_TIMER_FIRE_APP_READY		= 9,	/*!< Timer Fire and app ready for frame */
 } SENSORDPLIB_STATUS_E;
+
+/**
+ * \enum SENSORDPLIB_POWERSWITCH_CTRL_E
+ * \brief Power State in DC or control by PMU or CPU
+ */
+typedef enum
+{
+	SENSORDPLIB_POWERSWITCH_CTRL_DC_PMU, /*!< Power State at DC or Power Switch control by PMU */
+	SENSORDPLIB_POWERSWITCH_CTRL_CPU		/*!< Power State control by CPU */
+}SENSORDPLIB_POWERSWITCH_CTRL_E;
 /** @} */
 
 
@@ -1510,6 +1520,14 @@ void sensordplib_autoi2c_disable(void);
 void sensordplib_csirx_enable(uint8_t lane_nb);
 
 /**
+ * \brief Sensor DP library CSIRX(MIPIRX) ENABLE PATH THROUGH ONLY
+ *
+ * \param[in] lane_nb	 	MIPI CSIX LANE number
+ * \retval void.
+ */
+void sensordplib_csirx_enable_path_through_only(uint8_t lane_nb);
+
+/**
  * \brief Sensor DP library CSIRX(MIPIRX) DISABLE
  *
  * \retval void.
@@ -1597,15 +1615,23 @@ void sensordplib_csirx_set_fifo_fill(uint16_t fifo_fill);
 void sensordplib_csirx_get_fifo_fill(uint16_t *fifo_fill);
 
 /**
- * \brief Sensor DP library CSIRX(MIPI RX) Get EmbeddedLine Enable
+ * \brief Sensor DP library CSIRX(MIPI RX) Set LANE SWAP Enable
  *
- * \param[out] enable	 	embedded line enable
+ * \param[in] enable	 	LANE SWAP enable
  * \retval void.
  */
-void sensordplib_csirx_get_ebdline_enable(uint8_t *enable);
+void sensordplib_csirx_set_lnswap_enable(uint8_t enable);
 
 /**
- * \brief Sensor DP library CSIRX(MIPI TX) ENABLE
+ * \brief Sensor DP library CSIRX(MIPI RX) Get LANE SWAP Enable
+ *
+ * \param[out] enable	 	LANE SWAP enable
+ * \retval void.
+ */
+void sensordplib_csirx_get_lnswap_enable(uint8_t *enable);
+
+/**
+ * \brief Sensor DP library CSITX(MIPI TX) ENABLE
  *
  * \param[in] lane_nb	 	CSITX lane number
  * \param[in] bit_rate	 	CSITX bit rate
@@ -1614,6 +1640,17 @@ void sensordplib_csirx_get_ebdline_enable(uint8_t *enable);
  * \retval void.
  */
 void sensordplib_csitx_enable(uint8_t lane_nb, uint16_t bit_rate, uint16_t line_len, uint16_t frame_len);
+
+/**
+ * \brief Sensor DP library CSITX(MIPI TX) with XTAL24M ENABLE
+ *
+ * \param[in] lane_nb	 	CSITX lane number
+ * \param[in] bit_rate	 	CSITX bit rate
+ * \param[in] line_len	 	CSITX line length
+ * \param[in] frame_len	 	CSITX frame length
+ * \retval void.
+ */
+void sensordplib_csitx_wi_xtal24_enable(uint8_t lane_nb, uint16_t bit_rate, uint16_t line_len, uint16_t frame_len);
 
 /**
  * \brief Sensor DP library CSIRX(MIPI TX) DISABLE
@@ -1685,6 +1722,21 @@ void sensordplib_csitx_set_pixel_depth(uint8_t depth);
  * \retval void.
  */
 void sensordplib_csitx_get_pixel_depth(uint8_t *depth);
+
+/**
+ * \brief Sensor DP library INP set crop area
+ *
+ * \param[in] crop	 	crop area start and last point
+ * \retval void.
+ */
+void sensordplib_inp_set_crop_area(INP_CROP_T crop);
+/**
+ * \brief Sensor DP library Power State control by PMU or CPU
+ *
+ * \param[in] ctrl	 	Power State control by PMU or CPU
+ * \retval void.
+ */
+void sensordplib_set_power_switch(SENSORDPLIB_POWERSWITCH_CTRL_E ctrl);
 
 /** @} */
 #ifdef __cplusplus

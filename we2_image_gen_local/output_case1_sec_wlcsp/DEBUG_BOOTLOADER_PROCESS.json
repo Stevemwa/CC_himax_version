@@ -5,7 +5,7 @@
         "pat_type": 0,
         "version": 2,
         "exec_addr": "0x34005000",
-        "output_sec": "/mnt/c/Users/mengd/Desktop/Seeed_Grove_Vision_AI_V2_SD-Mic/we2_image_gen_local/output_case1_sec_wlcsp/inter_files/sign_formal_bootloader.bin"
+        "output_sec": "/home/mwas/conservacam/Seeed_Grove_Vision_AI_V2_SD-Mic/we2_image_gen_local/output_case1_sec_wlcsp/inter_files/sign_formal_bootloader.bin"
     },
     "1": {
         "input_file": "common/2ndbl/EPII_FW_2NDBL_arm_epii_evb.bin",
@@ -13,7 +13,7 @@
         "pat_type": 1,
         "version": 2,
         "exec_addr": "0x3401f000",
-        "output_sec": "/mnt/c/Users/mengd/Desktop/Seeed_Grove_Vision_AI_V2_SD-Mic/we2_image_gen_local/output_case1_sec_wlcsp/inter_files/sign_formal_2nd_bootloader.bin"
+        "output_sec": "/home/mwas/conservacam/Seeed_Grove_Vision_AI_V2_SD-Mic/we2_image_gen_local/output_case1_sec_wlcsp/inter_files/sign_formal_2nd_bootloader.bin"
     },
     "2": {
         "input_file": "common/sec_mem/sec_mem_layout_one_sonly_bin.json",

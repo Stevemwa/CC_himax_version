@@ -3,6 +3,7 @@
 #include "WE2_debug.h"
 #include "hx_drv_scu.h"
 #include "hx_drv_swreg_aon.h"
+#include "driver_interface.h"
 #ifdef IP_sensorctrl
 #include "hx_drv_sensorctrl.h"
 #endif
@@ -50,11 +51,13 @@
 #endif
 #endif
 
+#include "common_config.h"
 #include "app_msg.h"
 #include "app_state.h"
 #include "dp_task.h"
 #include "comm_task.h"
 #include "algo_task.h"
+#include "cvapp.h"
 #include "sleep_mode.h"
 #include "pinmux_cfg.h"
 
@@ -78,9 +81,6 @@
 #define MAIN_TASK_QUEUE_LEN   		10
 #define ALGO_TASK_QUEUE_LEN   		10
 #define VAD_BUFF_SIZE  				2048
-#define ENTER_SLEEP_MODE			1		// 0 : always on, 1 : enter Sleep mode
-#define SENSOR_AE_STABLE_CNT		10
-#define ENTER_PMU_MODE_FRAME_CNT	1
 
 volatile APP_MAIN_TASK_STATE_E g_maintask_state = APP_MAIN_TASK_STATE_UNINIT;
 volatile APP_ALGO_TASK_STATE_E g_algotask_state = APP_ALGO_TASK_STATE_UNINIT;
@@ -94,6 +94,8 @@ QueueHandle_t     xAlgoTaskQueue;
 
 uint32_t g_algo_done_frame = 0;
 uint32_t g_enter_pmu_frame_cnt = 0;
+
+extern void app_start_state(APP_STATE_E state);
 
 /*******************************************************************************
  * Prototypes
@@ -120,16 +122,13 @@ void pinmux_init()
 	/* Init I2C slave 0 pin mux to PA2, PA3 (SCL, SDA)*/
 	i2cs0_pinmux_cfg(&pinmux_cfg);
 
-	/* Init SPI master pin mux (share with SDIO) */
+	/* Init SPI master pin mux */
 	spi_m_pinmux_cfg(&pinmux_cfg);
-
-	/* Init SDIO pin mux for SD card */
-	//sdio_pinmux_cfg(&pinmux_cfg);
 
 	/* Init Arm SWD interface pin mux to PB6, PB7, PB8 (nR, CLK, DIO)*/
 	//swd_pinmux_cfg(&pinmux_cfg);
 
-	hx_drv_scu_set_all_pinmux_cfg(&pinmux_cfg);
+	hx_drv_scu_set_all_pinmux_cfg(&pinmux_cfg, 1);
 }
 
 
@@ -261,6 +260,9 @@ void main_task(void *pvParameters)
 		/*Warm Boot*/
 		xprintf("### Warm Boot ###\n");
 		g_enter_pmu_frame_cnt = ENTER_PMU_MODE_FRAME_CNT;
+		xprintf("drv_interface_set_mipi_ctrl(SCU_MIPI_CTRL_CPU)\n");
+		drv_interface_set_mipi_ctrl(SCU_MIPI_CTRL_CPU);
+        sensordplib_csirx_disable();
     	app_start_state(APP_STATE_RESTART);
 	}
 

@@ -23,7 +23,9 @@ LIB_SEL = pwrmgmt sensordp tflmtag2209_u55tag2205 spi_ptl spi_eeprom i2c_comm
 # Add new middleware here
 # The source code should be loacted in ~\middleware\{mid_name}\
 ##
-MID_SEL =
+MID_SEL = fatfs
+FATFS_PORT_LIST = mmc_spi
+CMSIS_DRIVERS_LIST = SPI
 
 #override OS_SEL := freertos
 override OS_SEL := freertos_10_5_1
@@ -38,6 +40,17 @@ override EPII_USECASE_SEL := drv_onecore_cm55m_s
 CIS_SUPPORT_INAPP = cis_sensor
 #CIS_SUPPORT_INAPP_MODEL = cis_hm0360
 CIS_SUPPORT_INAPP_MODEL = cis_ov5647
+#CIS_SUPPORT_INAPP_MODEL = cis_imx219
+#CIS_SUPPORT_INAPP_MODEL = cis_imx477
+#CIS_SUPPORT_INAPP_MODEL = cis_imx708
+
+ifeq ($(CIS_SUPPORT_INAPP_MODEL), cis_imx219)
+APPL_DEFINES += -DCIS_IMX
+else ifeq ($(CIS_SUPPORT_INAPP_MODEL), cis_imx477)
+APPL_DEFINES += -DCIS_IMX
+else ifeq ($(CIS_SUPPORT_INAPP_MODEL), cis_imx708)
+APPL_DEFINES += -DCIS_IMX
+endif
 
 ifeq ($(strip $(TOOLCHAIN)), arm)
 override LINKER_SCRIPT_FILE := $(SCENARIO_APP_ROOT)/$(APP_TYPE)/allon_sensor_tflm.sct

@@ -10,8 +10,6 @@
 extern "C" {
 #endif
 
-//#define _USE_ISDIO	1	/* 1: Enable iSDIO controls via disk_ioctl */
-
 /* Status of Disk Functions */
 typedef BYTE	DSTATUS;
 

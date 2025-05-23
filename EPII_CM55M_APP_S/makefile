@@ -44,7 +44,8 @@ TOOLCHAIN ?= gnu
 # Definition of Tool Paths
 ##
 ARM_TOOLPATH ?=
-GNU_TOOLPATH ?= /mnt/c/Users/mengd/Desktop/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/
+GNU_TOOLPATH ?= /home/mwas/conservacam/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/bin/
+
 #ARM_TOOLPATH ?= C:/Program Files/Arm/Development Studio 2020.1/sw/ARMCompiler6.15/bin
 #GNU_TOOLPATH ?= D:/Project/WE-II/CMSIS/cmsis_tool/gcc-arm-none-eabi-10-2020-q4-major-win32/gcc-arm-none-eabi-10-2020-q4-major/bin
 
@@ -96,7 +97,10 @@ EPII_NSC_SEL = cm55m_nsc_cfg
 # 1 for enable
 # other for disable
 ##
-LIB_CMSIS_NN_ENALBE = 0
+LIB_CMSIS_NN_ENALBE = 1
+## 0 : default version (tflmtag2209_u55tag2205)
+## 7_0_0 : cmsis_nn_7_0_0 (tflmtag2412_u55tag2411)
+LIB_CMSIS_NN_VERSION = 7_0_0
 
 # USING Pre-built CV library
 # 1 for enable
@@ -120,16 +124,37 @@ CMSIS_DRIVERS_USECASE_SEL =
 # y for enable
 # other for disable
 ##
-SUPPORT_SEC_LIB ?= n
+SUPPORT_SEC_LIB ?= y
+
+# customer name for customer specific API
+# seeed
 ##
+CUSTOMER ?= seeed
 
 # PS: As follow are scenario_app app name should be the same as directory name
 # allon_sensor_tflm
+# allon_sensor_tflm_cmsis_nn (LIB_CMSIS_NN_ENALBE = 1)
+# allon_sensor_tflm_fatfs
 # allon_sensor_tflm_freertos
+# allon_jpeg_encode
+# fatfs_mmc_spi
 # hello_world_freertos_tz_s_only
+# tflm_fd_fm
+# tflm_yolov8_od
+# tflm_yolov8_pose
+# pdm_record
+# imu_read
+# hello_world_cmsis_dsp
+# hello_world_cmsis_cv
+# kws_pdm_record
+# ei_standalone_inferencing
+# ei_standalone_inferencing_camera
+# edge_impulse_firmware
+# tflm_peoplenet
+# tflm_yolo11_od
+# tflm_yolov8_gender_cls
 ##
-APP_TYPE = grove_vision_ai
-
+APP_TYPE = allon_sensor_tflm
  
 ### Options above must be added before include options.mk ###
 override EPII_ROOT := $(strip $(subst \,/,$(EPII_ROOT)))

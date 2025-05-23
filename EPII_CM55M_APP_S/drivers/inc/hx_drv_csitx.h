@@ -106,6 +106,14 @@ CSITX_ERROR_E hx_drv_csitx_disable();
 CSITX_ERROR_E hx_drv_csitx_dphy_pwron(uint16_t bit_rate);
 
 /**
+ * \brief   CSITX dphy WITH XTAL24M power on
+ *
+ * \param[in]	bit_rate	CSITX bit rate
+ * \return  CSITX_ERROR_E.
+ */
+CSITX_ERROR_E hx_drv_csitx_dphy_wi_xtal24_pwron(uint16_t bit_rate);
+
+/**
  * \brief   CSITX dphy power off
  *
  * \return  CSITX_ERROR_E.
@@ -190,5 +198,13 @@ CSITX_ERROR_E hx_drv_csitx_get_pixel_depth(uint8_t *depth);
  * \return  CSITX_ERROR_E.
  */
 CSITX_ERROR_E hx_drv_csitx_set_pixel_depth(uint8_t depth);
+
+/**
+ * \brief   CSITX set Continuous CLK out
+ *
+ * \param[in]	lane_nb	lane number
+ * \return  CSITX_ERROR_E.
+ */
+CSITX_ERROR_E hx_drv_csitx_set_continuous_clk(uint8_t lane_nb);
 
 #endif

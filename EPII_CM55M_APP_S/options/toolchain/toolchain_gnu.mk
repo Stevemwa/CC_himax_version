@@ -132,7 +132,7 @@ LCORE_OPT_GNU += -L"$(EPII_ROOT)/linker_script/gcc/"
 LCORE_OPT_GNU += -L"$(OUT_DIR)"
 
 WARN_OPT := -Wall 
-DEVELOP_OPT := -fstack-usage
+DEVELOP_OPT := -fstack-usage -flax-vector-conversions
 #DEVELOP_OPT += -save-temps=obj
 GNU_OPT := -ffunction-sections -fdata-sections
 #COMPILE_OPT +=-fmerge-constants 
@@ -180,6 +180,11 @@ endif
 	MAKE	= make
 ## GNU TOOLCHAIN EXIST TESTING ##
 GNU_TOOLCHAIN_PREFIX_TEST := $(wildcard $(GNU_TOOLCHAIN_PREFIX)/$(DMP)*)
+ifeq "$(HOST_OS)" "Windows"
+GCC_VERSION := $(SHELL $(CC) -dumpversion)
+else
+GCC_VERSION := $(shell $(CC) -dumpversion)
+endif
 
 ifneq ($(GNU_TOOLCHAIN_PREFIX_TEST), )
 	CC	:= $(GNU_TOOLCHAIN_PREFIX)/$(CC)
@@ -205,12 +210,25 @@ endif
 	MKDEP_OPT	= -fmacro-prefix-map="../$(@D)/"=. -MMD -MP -MF"$(@:$(OUT_DIR)/%.o=$(OUT_DIR)/%.d)" -MT"$(@:$(OUT_DIR)/%.o=$(OUT_DIR)/%.o)" -MT"$(@:$(OUT_DIR)/%.o=$(OUT_DIR)/%.d)"
 	COMMON_COMPILE_OPT = $(OPT_OLEVEL) $(CDEBUG_OPTION) $(ALL_DEFINES) $(ALL_INCLUDES) $(MKDEP_OPT)
 
-	## C/CPP/ASM/LINK Options
-	COMPILE_OPT	+= $(CCORE_OPT_GNU)   $(ADT_COPT)   $(COMMON_COMPILE_OPT) -std=gnu99
-	CXX_COMPILE_OPT	+= $(CXXCORE_OPT_GNU) $(ADT_CXXOPT) $(COMMON_COMPILE_OPT) -std=c++11 -fno-rtti -fno-exceptions -fno-threadsafe-statics
+#	## C/CPP/ASM/LINK Options
+#	COMPILE_OPT	+= $(CCORE_OPT_GNU)   $(ADT_COPT)   $(COMMON_COMPILE_OPT) -std=gnu99
+#	ifdef OS_SEL
+#	CXX_COMPILE_OPT	+= $(CXXCORE_OPT_GNU) $(ADT_CXXOPT) $(COMMON_COMPILE_OPT) -std=c++11 -fno-rtti -fno-exceptions
+#	else
+#	CXX_COMPILE_OPT	+= $(CXXCORE_OPT_GNU) $(ADT_CXXOPT) $(COMMON_COMPILE_OPT) -std=c++11 -fno-rtti -fno-exceptions -fno-threadsafe-statics
+#	endif
+	COMPILE_OPT	+= $(CCORE_OPT_GNU)   $(ADT_COPT)   $(COMMON_COMPILE_OPT) -std=gnu11
+	CXX_COMPILE_OPT	+= $(CXXCORE_OPT_GNU) $(ADT_CXXOPT) $(COMMON_COMPILE_OPT) -std=c++17 -fno-rtti -fno-exceptions -fno-threadsafe-statics -nostdlib
+
+	
+
 	ASM_OPT		+= $(ACORE_OPT_GNU)   $(ADT_AOPT)   $(COMMON_COMPILE_OPT) -x assembler-with-cpp
 	PRE_LINKER_SCRIPT_FILE = $(OUT_DIR)/$(APPL_NAME).ld
-	LINK_OPT	+= -Wl,--no-warn-rwx-segments $(ALL_DEFINES) $(LCORE_OPT_GNU) $(ADT_LOPT) \
+	ifeq ($(firstword $(sort $(GCC_VERSION) 12.0.0)),12.0.0)
+	# if GCC >= 12.0.0, use -Wl,--no-warn-rwx-segments
+	LINK_OPT	+= -Wl,--no-warn-rwx-segments
+	endif
+	LINK_OPT	+= $(ALL_DEFINES) $(LCORE_OPT_GNU) $(ADT_LOPT) \
 				$(LMAP_OPTION) $(USE_SPECS) -T $(PRE_LINKER_SCRIPT_FILE) $(NSC_OBJ)
 
 	## Other Options

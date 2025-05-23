@@ -1,7 +1,7 @@
 /*
  * cisdp_sensor.h
  *
- *  Created on: 2022/11/18
+ *  Created on: 20240122
  *      Author: 901912
  */
 
@@ -39,7 +39,6 @@ void cisdp_sensor_stop();
 void cisdp_get_jpginfo(uint32_t *jpeg_enc_filesize, uint32_t *jpeg_enc_addr);
 
 uint32_t app_get_jpeg_addr();
-uint32_t app_get_jpeg_sz();
 uint32_t app_get_raw_addr();
 uint32_t app_get_raw_sz();
 uint32_t app_get_raw_width();

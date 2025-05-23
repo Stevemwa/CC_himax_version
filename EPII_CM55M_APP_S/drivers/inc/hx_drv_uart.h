@@ -6,6 +6,9 @@
 /* no support rs485 & dma*/
 #if defined(BOOT_USED)
 #define UART_BL_USE
+#ifdef SECONDBOOTLOADER
+#define UART_2ND_BL_USE
+#endif
 #endif
 
 /**
@@ -15,8 +18,8 @@
  * <pre>
  *      Sample code: UART0 pin mux configuration and initialization
  *      //The output pin of UART0 is defined by the user application.
- *      hx_drv_scu_set_PB0_pinmux(SCU_PB0_PINMUX_UART0_RX_1);
- *      hx_drv_scu_set_PB1_pinmux(SCU_PB1_PINMUX_UART0_TX_1);
+ *      hx_drv_scu_set_PB0_pinmux(SCU_PB0_PINMUX_UART0_RX_1, 1);
+ *      hx_drv_scu_set_PB1_pinmux(SCU_PB1_PINMUX_UART0_TX_1, 1);
  * 
  *      //initialize UART 0
  *      hx_drv_uart_init(USE_DW_UART_0, HX_UART0_BASE);
@@ -67,7 +70,7 @@
  *      hx_CleanDCache_by_Addr((volatile void *)wbuffer, (sizeof(char) * data_size));
  *      dev_uart_ptr = hx_drv_uart_get_dev(USE_DW_UART_1);
  *      dev_uart_ptr->uart_open(UART_BAUDRATE_115200);
- *      e_no = dev_uart_ptr->uart_write_udma(wbuffer, data_size);
+ *      e_no = dev_uart_ptr->uart_write_udma(wbuffer, data_size, uart_dma_tx_cb);
  * 
  *      Usage-4: Receive data using interrpupt mode with UART 1
  *      uinr32_t g_datasize = 0;
@@ -224,13 +227,22 @@
 #define UART_UDMA 1
 
 /**
+ * \brief UART write/read dma function support Linked-list 
+ * if there flag are defined, the Max size of uart_write_udma/uart_read_udma can up to 1 MB.
+ * otherwise, max size only is up to 4095.
+ */
+#define UART_0_DMA_LLI_SUPPORT
+#define UART_1_DMA_LLI_SUPPORT
+#define UART_2_DMA_LLI_SUPPORT
+
+/**
  * \enum USE_DW_UART_E
  * \brief DW UART Object ID
  */
 typedef enum USE_DW_UART_S
 {
     USE_DW_UART_0 = DW_UART_0_ID, /*!< enable use datafusion subsystem uart 0 */
-#ifndef UART_BL_USE
+#if !defined(UART_BL_USE) || defined(UART_2ND_BL_USE)
     USE_DW_UART_1 = DW_UART_1_ID, /*!< enable use datafusion subsystem uart 1 */
     USE_DW_UART_2 = DW_UART_2_ID, /*!< enable use datafusion subsystem uart 2 */
 #endif
@@ -601,6 +613,13 @@ typedef struct uart_dma_channels_s
 /**
  * \brief Set \ref dev_uart_cbs::tx_cb "uart transmit success callback" function
  * when all required bytes are transmitted for interrupt method
+ * 
+ * If tx_buffer == NULL and \retval DW_UART_IIR_XMIT_EMPTY flag is trigged:
+ * then TX callback function will be trigged.
+ * 
+ * IF tx_buffer != NULL :
+ * TX callback function will be trigged after the data of tx buffer is sended
+ * 
  * \param type : \ref DEV_CALLBACK * or NULL
  * \param usage : transmit success callback function for uart
  * - Return value explanation :
@@ -609,6 +628,13 @@ typedef struct uart_dma_channels_s
 /**
  * \brief Set \ref dev_uart_cbs::rx_cb "uart receive success callback" function
  * when all required bytes are received for interrupt method
+ * 
+ * If rx_buffer == NULL and \retval DW_UART_IIR_DATA_AVAIL flag is trigged:
+ * then RX callback function will be trigged.
+ * 
+ * IF rx_buffer != NULL :
+ * RX callback function will be trigged after the aomount of data speciifed by re_buffer is received.
+ * 
  * \param type : \ref DEV_CALLBACK * or NULL
  * \param usage : receive success callback function for uart
  * - Return value explanation :
@@ -842,7 +868,7 @@ typedef struct dev_uart
     int32_t (*uart_control)(uint32_t ctrl_cmd, void *param); /*!< Control uart device */
     int32_t (*uart_write)(const void *data, uint32_t len);   /*!< Send data by uart device(blocked) */
     int32_t (*uart_read)(void *data, uint32_t len);          /*!< Read data from uart device(blocked) */
-    int32_t (*uart_read_nonblock)(void *data, uint32_t len); /*!< Read data from uart device(blocked) */
+    int32_t (*uart_read_nonblock)(void *data, uint32_t len); /*!< Read data from uart device(non-blocked) */
     int32_t (*uart_write_udma)(const void *data, uint32_t len,
                                void *cb);                          /*!< Read data from uart device(non-blocking) */
     int32_t (*uart_read_udma)(void *data, uint32_t len, void *cb); /*!< Read data from uart device(non-blocking) */
@@ -925,7 +951,8 @@ typedef void* UART_CTRL_PARAM;
 
 /**
  * \fn		int32_t (*uart_write_udma)(const void *data, uint32_t len, void *cb)
- * \details	send \ref data through uart with defined \ref len(blocked). max size: 4095
+ * \details	send \ref data through uart with defined \ref len(blocked). 
+ *          max size: 4095 (if UART_x_DMA_LLI_SUPPORT is defined, max size is 1 MB)
  * \param[in]	data	pointer to data need to send by uart, must not be NULL
  * \param[in]	len	length of data to be sent, must > 0
  * \param[out]  cb  callback function after operation is done
@@ -937,7 +964,8 @@ typedef void* UART_CTRL_PARAM;
 
 /**
  * \fn		int32_t (*uart_read_udma)(void *data, uint32_t len, void *cb)
- * \details	receive \ref data of defined \ref len through uart(blocked). max size: 4095
+ * \details	receive \ref data of defined \ref len through uart(blocked). 
+ *         max size: 4095 (if UART_x_DMA_LLI_SUPPORT is defined, max size is 1 MB)
  * \param[out]	data	pointer to data need to received by uart, must not be NULL
  * \param[in]	len	length of data to be received, must > 0
  * \param[out]  cb  callback function after operation is done

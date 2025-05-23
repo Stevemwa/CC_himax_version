@@ -1,7 +1,7 @@
 ## All defines ##
-ALL_DEFINES += $(BOARD_DEFINES) $(DRIVERS_DEFINES)\
+ALL_DEFINES += $(BOARD_DEFINES) $(DRIVERS_DEFINES) $(CMSIS_DRIVERS_DEFINES) \
 		$(DEVICE_DEFINES) $(EXTERNAL_DEFINES) $(MID_DEFINES) $(LIB_DEFINES) $(OS_DEFINES) $(OS_HAL_DEFINES)\
-		$(TOOLCHAIN_DEFINES) $(APPL_DEFINES) $(TRUSTZONE_SEC_DEFINES) $(TRUSTZONE_CFG_DEFINES) $(NSC_DEFINES) $(INTERFACE_DEFINES)
+		$(TOOLCHAIN_DEFINES) $(APPL_DEFINES) $(TRUSTZONE_SEC_DEFINES) $(TRUSTZONE_CFG_DEFINES) $(NSC_DEFINES) $(INTERFACE_DEFINES) $(CUSTOMER_DEFINES)
 
 ## all includes conversion  ##
 ALL_INCLUDES = $(foreach dir,$(ALL_INC_DIRS),-I$(dir))
@@ -21,11 +21,7 @@ ALL_GENERATED_DIRS_TMPFILES = $(sort $(call get_mkdir_tmps, $(ALL_GENERATED_DIRS
 ##
 # Collect all libraries
 ##
-ifeq ($(SUPPORT_SEC_LIB), y)
-SECURE_LIB = $(OUT_DIR)/libsecurity.a
-else
-SECURE_LIB =
-endif
+
 
 ##
 # Collect Dependency Files
@@ -232,10 +228,43 @@ clean :
 
 #####RULES FOR GENERATING ELF FILE#####
 .SECONDEXPANSION:
-$(APPL_FULL_NAME).$(ELF_FILENAME) : $(ALL_GENERATED_DIRS_TMPFILES) $(DEVICE_OBJS) $(BOARD_OBJS) $(INTEGRATE_OBJS) $(HWACCAUTOTEST_OBJS) $(SCENARIO_APP_OBJS) $(APPL_OBJS) $(TRUSTZONE_SEC_OBJS) $(NSC_OBJS) $(OS_ALLOBJS) $(OS_HAL_ALLOBJS) $(TFM_OBJS) $(INTERFACE_OBJS) $(HMX_BSP_LIBS) $(SECURE_LIB) $(INFERENCE_ENGINE_LIB) $(TFM_LIBS) $(CV_LIB) $(AUDIOALGO_LIB) $(PRE_LINKER_SCRIPT_FILE) $$(COMMON_COMPILE_PREREQUISITES)
+$(APPL_FULL_NAME).$(ELF_FILENAME) : $(ALL_GENERATED_DIRS_TMPFILES) $(DEVICE_OBJS) $(BOARD_OBJS) $(INTEGRATE_OBJS) $(HWACCAUTOTEST_OBJS) $(SCENARIO_APP_OBJS) $(APPL_OBJS) $(TRUSTZONE_SEC_OBJS) $(NSC_OBJS) $(OS_ALLOBJS) $(OS_HAL_ALLOBJS) $(TFM_OBJS) $(INTERFACE_OBJS) $(HMX_BSP_LIBS) $(INFERENCE_ENGINE_LIB) $(TFM_LIBS) $(CV_LIB) $(AUDIOALGO_LIB) $(PRE_LINKER_SCRIPT_FILE) $$(COMMON_COMPILE_PREREQUISITES)
 	$(TRACE_LINK)
-	$(Q)$(LD) $(LINK_OPT) $(INTEGRATE_OBJS) $(HWACCAUTOTEST_OBJS) $(DEVICE_OBJS) $(BOARD_OBJS) $(SCENARIO_APP_OBJS) $(APPL_OBJS) $(TRUSTZONE_SEC_OBJS) $(NSC_OBJS) $(OS_ALLOBJS) $(OS_HAL_ALLOBJS) $(TFM_OBJS) $(INTERFACE_OBJS) $(LD_START_GROUPLIB) $(HMX_BSP_LIBS) $(SECURE_LIB) $(INFERENCE_ENGINE_LIB) $(TFM_LIBS) $(CV_LIB) $(AUDIOALGO_LIB) $(EXTRA_LIBS) $(LD_SYSTEMLIBS) $(LD_END_GROUPLIB) -o $@
+ifeq ($(VALID_TOOLCHAIN), arm)
+	$(file >objs.txt)
+	$(foreach O,$(DEVICE_OBJS),$(file >>objs.txt,$O))
+	$(foreach O,$(INTEGRATE_OBJS),$(file >>objs.txt,$O))
+	$(foreach O,$(HWACCAUTOTEST_OBJS),$(file >>objs.txt,$O))
+	$(foreach O,$(BOARD_OBJS),$(file >>objs.txt,$O))
+	$(foreach O,$(SCENARIO_APP_OBJS),$(file >>objs.txt,$O))
+	$(foreach O,$(APPL_OBJS),$(file >>objs.txt,$O))
+	$(foreach O,$(TRUSTZONE_SEC_OBJS),$(file >>objs.txt,$O))
+	$(foreach O,$(NSC_OBJS),$(file >>objs.txt,$O))
+	$(foreach O,$(OS_ALLOBJS),$(file >>objs.txt,$O))
+	$(foreach O,$(OS_HAL_ALLOBJS),$(file >>objs.txt,$O))
+	$(foreach O,$(TFM_OBJS),$(file >>objs.txt,$O))
+	$(foreach O,$(INTERFACE_OBJS),$(file >>objs.txt,$O))
+	$(Q)$(LD) $(LINK_OPT) --via=objs.txt $(LD_START_GROUPLIB) $(HMX_BSP_LIBS) $(INFERENCE_ENGINE_LIB) $(TFM_LIBS) $(CV_LIB) $(AUDIOALGO_LIB) $(EXTRA_LIBS) $(LD_SYSTEMLIBS) $(LD_END_GROUPLIB) -o $@
 	$(Q)$(SIZE) $(APPL_FULL_NAME).$(ELF_FILENAME)
+	$(Q)$(RM) objs.txt
+else
+	$(file >objs.in)
+	$(foreach O,$(DEVICE_OBJS),$(file >>objs.in,$O))
+	$(foreach O,$(INTEGRATE_OBJS),$(file >>objs.in,$O))
+	$(foreach O,$(HWACCAUTOTEST_OBJS),$(file >>objs.in,$O))
+	$(foreach O,$(BOARD_OBJS),$(file >>objs.in,$O))
+	$(foreach O,$(SCENARIO_APP_OBJS),$(file >>objs.in,$O))
+	$(foreach O,$(APPL_OBJS),$(file >>objs.in,$O))
+	$(foreach O,$(TRUSTZONE_SEC_OBJS),$(file >>objs.in,$O))
+	$(foreach O,$(NSC_OBJS),$(file >>objs.in,$O))
+	$(foreach O,$(OS_ALLOBJS),$(file >>objs.in,$O))
+	$(foreach O,$(OS_HAL_ALLOBJS),$(file >>objs.in,$O))
+	$(foreach O,$(TFM_OBJS),$(file >>objs.in,$O))
+	$(foreach O,$(INTERFACE_OBJS),$(file >>objs.in,$O))
+	$(Q)$(LD) $(LINK_OPT) @objs.in $(LD_START_GROUPLIB) $(HMX_BSP_LIBS) $(INFERENCE_ENGINE_LIB) $(TFM_LIBS) $(CV_LIB) $(AUDIOALGO_LIB) $(EXTRA_LIBS) $(LD_SYSTEMLIBS) $(LD_END_GROUPLIB) -o $@
+	$(Q)$(SIZE) $(APPL_FULL_NAME).$(ELF_FILENAME)
+	$(Q)$(RM) objs.in
+endif
 ifeq ($(VALID_TOOLCHAIN), arm)
 	$(Q)$(OBJCOPY) --elf --output=$(APPL_FULL_NAME).elf $(APPL_FULL_NAME).$(ELF_FILENAME)
 endif
@@ -256,14 +285,6 @@ ifeq ($(VALID_TOOLCHAIN), gnu)
 	$(Q)$(CC) $(ARCH_FLAGS) $(ALL_DEFINES) $(ALL_INCLUDES) -E -P -xc "$<" -MMD -MF"$(basename $@).d" -MT"$@" -o "$@"
 else
 	$(Q)$(CC) $(ARCH_FLAGS) $(ALL_DEFINES) $(ALL_INCLUDES) -E -xc "$<" -MMD -MF"$(basename $@).d" -MT"$@" -o "$@"
-endif
-
-
-$(SECURE_LIB) :
-ifeq "$(HOST_OS)" "Windows"
-	$(CP) .\library\security\libsecurity.a $(BOARD_OUT_DIR)\$(BUILD_INFO)\libsecurity.a
-else
-	$(CP) ./library/security/libsecurity.a $(BOARD_OUT_DIR)/$(BUILD_INFO)/libsecurity.a
 endif
 
 #####APPLICATION C/ASM/CPP SOURCE FILE COMPILING RULES#####

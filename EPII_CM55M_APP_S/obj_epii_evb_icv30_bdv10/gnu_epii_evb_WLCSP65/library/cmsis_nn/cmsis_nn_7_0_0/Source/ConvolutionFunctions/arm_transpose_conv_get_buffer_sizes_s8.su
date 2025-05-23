@@ -1,0 +1,2 @@
+library/cmsis_nn/cmsis_nn_7_0_0/Source/ConvolutionFunctions/arm_transpose_conv_get_buffer_sizes_s8.c:51:9:arm_transpose_conv_s8_get_buffer_size	48	static
+library/cmsis_nn/cmsis_nn_7_0_0/Source/ConvolutionFunctions/arm_transpose_conv_get_buffer_sizes_s8.c:79:9:arm_transpose_conv_s8_get_reverse_conv_buffer_size	0	static

@@ -1,0 +1,4 @@
+app/scenario_app/allon_sensor_tflm/allon_sensor_tflm.c:119:13:dp_app_cv_eventhdl_cb	24	static
+app/scenario_app/allon_sensor_tflm/allon_sensor_tflm.c:276:6:app_start_state.part.0	24	static
+app/scenario_app/allon_sensor_tflm/allon_sensor_tflm.c:276:6:app_start_state	0	static
+app/scenario_app/allon_sensor_tflm/allon_sensor_tflm.c:309:5:app_main	16	static

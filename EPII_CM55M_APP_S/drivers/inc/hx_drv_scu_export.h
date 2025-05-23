@@ -931,9 +931,9 @@ typedef enum {
  * \brief SCU PA0 PinMux
  */
 typedef enum {
-	SCU_PA0_PINMUX_AON_GPIO0_0 = 0, /**< AON_GPIO0 */
+	SCU_PA0_PINMUX_AON_GPIO0_0 = 0, /**< AON_GPIO0 (input mode only)*/
 	SCU_PA0_PINMUX_PMU_SINT0 = 1, /**< PMU_SINT0 */
-	SCU_PA0_PINMUX_AON_GPIO0_2 = 2, /**< AON_GPIO0 */
+	SCU_PA0_PINMUX_AON_GPIO0_2 = 2, /**< AON_GPIO0 (input/output mode)*/
 	SCU_PA0_PINMUX_AON_XTAL32K_CLK_DIV256 = 3, /**< XTAL_32K_CLK/256 */
 	SCU_PA0_PINMUX_PMU_DCDC_EN = 5, /**< PMU_DCDC_EN */
 	SCU_PA0_PINMUX_TAM_IN_0 = 6, /**< TAM_IN_0 */
@@ -1827,6 +1827,27 @@ typedef enum {
 } SCU_MEM_ATTR_E;
 
 /**
+ * \enum SCU_MIPI_CTRL
+ * \brief MIPI Control by CPU or PMU
+ */
+typedef enum {
+	SCU_MIPI_CTRL_CPU = 0,
+	SCU_MIPI_CTRL_PMU = 1,
+} SCU_MIPI_CTRL_E;
+
+
+/**
+ * \enum SCU_TXPHY_RCLK_SRC_SEL_E
+ * \brief TX RX Clock Source selection
+ */
+typedef enum {
+	SCU_TXPHY_RCLK_SRC_SEL_NORMAL = 0, /**<  Normal Mode*/
+	SCU_TXPHY_RCLK_SRC_SEL_TEST_RC24M =2, /**<  Test Mode, from RC_24M1M_CLK*/
+	SCU_TXPHY_RCLK_SRC_SEL_TEST_XTAL24M = 3, /**<  Test Mode, from XTAL_24M_CLK*/
+} SCU_TXPHY_RCLK_SRC_SEL_E;
+/** @} */
+
+/**
  * \struct SCU_PAD_PULL_CFG_T
  * \brief PAD Pull configuration
  */
@@ -1868,8 +1889,8 @@ typedef struct {
 	SCU_PAD_PULL_CFG_T       uart1_rts;
 	SCU_PAD_PULL_CFG_T       sw_data;
 	SCU_PAD_PULL_CFG_T       sw_clk;
-	SCU_PAD_PULL_CFG_T       sen_i2cm_sda;
-	SCU_PAD_PULL_CFG_T       sen_i2cm_scl;
+	SCU_PAD_PULL_CFG_T       i2cm_sda;		// PAD_I2C_MST_SDA (LQFP128)
+	SCU_PAD_PULL_CFG_T       i2cm_scl;		// PAD_I2C_MST_SCL (LQFP128)
 	SCU_PAD_PULL_CFG_T       spis_do;
 	SCU_PAD_PULL_CFG_T       spis_di;
 	SCU_PAD_PULL_CFG_T       spis_sclk;

@@ -17,47 +17,73 @@
                 "sec_type": 1,
                 "sec_dst": "0x10000000"
             },
-            "section_count": 4,
+            "section_count": 6,
             "section_2": {
                 "type": 3,
                 "section_number": 2,
-                "sec_size": "0x12618",
+                "sec_size": "0x13598",
                 "version": 2,
                 "output": "output_case1_sec_wlcsp/inter_files/cm55m_s_application_p1_s2.img",
                 "div_cnt": 1,
                 "align": 0,
                 "sec_offset": "0x0",
-                "div_sec_size": "0x12618",
+                "div_sec_size": "0x13598",
                 "sec_type": 0,
-                "sec_dst": "0x100007c0"
+                "sec_dst": "0x3401f000"
             },
             "section_3": {
                 "type": 3,
                 "section_number": 3,
-                "sec_size": "0x14D8",
+                "sec_size": "0xC65C",
                 "version": 2,
                 "output": "output_case1_sec_wlcsp/inter_files/cm55m_s_application_p1_s3.img",
                 "div_cnt": 1,
                 "align": 0,
                 "sec_offset": "0x0",
-                "div_sec_size": "0x14d8",
-                "sec_type": 1,
-                "sec_dst": "0x30000000"
+                "div_sec_size": "0xc65c",
+                "sec_type": 0,
+                "sec_dst": "0x100007c0"
             },
             "section_4": {
                 "type": 3,
                 "section_number": 4,
-                "sec_size": "0x8",
+                "sec_size": "0x3D6B0",
                 "version": 2,
                 "output": "output_case1_sec_wlcsp/inter_files/cm55m_s_application_p1_s4.img",
                 "div_cnt": 1,
                 "align": 0,
                 "sec_offset": "0x0",
+                "div_sec_size": "0x3d6b0",
+                "sec_type": 1,
+                "sec_dst": "0x340325a0"
+            },
+            "section_5": {
+                "type": 3,
+                "section_number": 5,
+                "sec_size": "0x3BFC",
+                "version": 2,
+                "output": "output_case1_sec_wlcsp/inter_files/cm55m_s_application_p1_s5.img",
+                "div_cnt": 1,
+                "align": 0,
+                "sec_offset": "0x0",
+                "div_sec_size": "0x3bfc",
+                "sec_type": 1,
+                "sec_dst": "0x30000000"
+            },
+            "section_6": {
+                "type": 3,
+                "section_number": 6,
+                "sec_size": "0x8",
+                "version": 2,
+                "output": "output_case1_sec_wlcsp/inter_files/cm55m_s_application_p1_s6.img",
+                "div_cnt": 1,
+                "align": 0,
+                "sec_offset": "0x0",
                 "div_sec_size": "0x8",
                 "sec_type": 1,
-                "sec_dst": "0x10012dd8"
+                "sec_dst": "0x1000ce1c"
             },
-            "output_sec": "/mnt/c/Users/mengd/Desktop/Seeed_Grove_Vision_AI_V2_SD-Mic/we2_image_gen_local/output_case1_sec_wlcsp/inter_files/sign_formal_cm55m_s_application_p1.img"
+            "output_sec": "/home/mwas/conservacam/Seeed_Grove_Vision_AI_V2_SD-Mic/we2_image_gen_local/output_case1_sec_wlcsp/inter_files/sign_formal_cm55m_s_application_p1.img"
         },
         "part_2": {
             "section_1": {
@@ -71,21 +97,21 @@
                 "sec_offset": "0x0",
                 "div_sec_size": "0xc",
                 "sec_type": 2,
-                "sec_dst": "0x10012de0"
+                "sec_dst": "0x1000ce24"
             },
             "section_count": 3,
             "section_2": {
                 "type": 3,
                 "section_number": 2,
-                "sec_size": "0x278",
+                "sec_size": "0x4C8",
                 "version": 2,
                 "output": "output_case1_sec_wlcsp/inter_files/cm55m_s_application_p2_s2.img",
                 "div_cnt": 1,
                 "align": 0,
                 "sec_offset": "0x0",
-                "div_sec_size": "0x278",
+                "div_sec_size": "0x4c8",
                 "sec_type": 2,
-                "sec_dst": "0x300014d8"
+                "sec_dst": "0x30003c00"
             },
             "section_3": {
                 "type": 3,
@@ -98,9 +124,9 @@
                 "sec_offset": "0x0",
                 "div_sec_size": "0x8",
                 "sec_type": 2,
-                "sec_dst": "0x10012dec"
+                "sec_dst": "0x1000ce30"
             },
-            "output_sec": "/mnt/c/Users/mengd/Desktop/Seeed_Grove_Vision_AI_V2_SD-Mic/we2_image_gen_local/output_case1_sec_wlcsp/inter_files/sign_formal_cm55m_s_application_p2.img"
+            "output_sec": "/home/mwas/conservacam/Seeed_Grove_Vision_AI_V2_SD-Mic/we2_image_gen_local/output_case1_sec_wlcsp/inter_files/sign_formal_cm55m_s_application_p2.img"
         },
         "part_count": 2
     }

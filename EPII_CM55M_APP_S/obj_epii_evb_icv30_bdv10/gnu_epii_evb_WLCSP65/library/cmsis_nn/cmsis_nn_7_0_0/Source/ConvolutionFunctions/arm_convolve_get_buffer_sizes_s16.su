@@ -1,0 +1,4 @@
+library/cmsis_nn/cmsis_nn_7_0_0/Source/ConvolutionFunctions/arm_convolve_get_buffer_sizes_s16.c:54:9:arm_convolve_s16_get_buffer_size	0	static
+library/cmsis_nn/cmsis_nn_7_0_0/Source/ConvolutionFunctions/arm_convolve_get_buffer_sizes_s16.c:70:9:arm_convolve_wrapper_s16_get_buffer_size	0	static
+library/cmsis_nn/cmsis_nn_7_0_0/Source/ConvolutionFunctions/arm_convolve_get_buffer_sizes_s16.c:81:9:arm_convolve_wrapper_s16_get_buffer_size_dsp	0	static
+library/cmsis_nn/cmsis_nn_7_0_0/Source/ConvolutionFunctions/arm_convolve_get_buffer_sizes_s16.c:89:9:arm_convolve_wrapper_s16_get_buffer_size_mve	0	static

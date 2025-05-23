@@ -9,18 +9,26 @@
 
 #include "ff.h"			/* Obtains integer types */
 #include "diskio.h"		/* Declarations of disk functions */
-#include "mmc_we2.h"
-
 /* Definitions of physical drive number for each drive */
-#if FF_VOLUMES == 1
-#define DEV_MMC		0	/* Example: Map MMC/SD card to physical drive 0 */
-#elif FF_VOLUMES == 2
-#define DEV_MMC		0	/* Example: Map MMC/SD card to physical drive 0 */
-#define DEV_RAM		1	/* Example: Map Ramdisk to physical drive 1 */
-#else
-#define DEV_MMC		1	/* Example: Map MMC/SD card to physical drive 0 */
-#define DEV_RAM		0	/* Example: Map Ramdisk to physical drive 1 */
-#define DEV_USB		2	/* Example: Map USB MSD to physical drive 2 */
+
+#if defined(FATFS_PORT_mmc_spi) || defined(FATFS_PORT_mmc_sdio)
+#define DEV_MMC    0 /* Example: Map MMC/SD card to physical drive 0 */
+#endif
+#if defined(FATFS_PORT_flash)
+#define DEV_FLASH  1 /* Example: Map NOR Flash to physical drive 1 */
+#endif
+#if defined(FATFS_PORT_ram)
+#define DEV_RAM    2 /* Example: Map Ramdisk to physical drive 2 */
+#endif
+
+#if defined(DEV_MMC)
+#include "mmc_we2.h"
+#endif
+#if defined(DEV_FLASH)
+#include "flash_we2.h"
+#endif
+#if defined(DEV_RAM)
+#include "ram_we2.h"
 #endif
 
 /*-----------------------------------------------------------------------*/
@@ -32,17 +40,17 @@ DSTATUS disk_status (
 )
 {
 	switch (pdrv) {
-#if defined(DEV_RAM)
-	case DEV_RAM :
-		return ram_disk_status();
-#endif
 #if defined(DEV_MMC)
 	case DEV_MMC :
 		return mmc_disk_status();
 #endif
-#if defined(DEV_USB)
-	case DEV_USB :
-		return usb_disk_status();
+#if defined(DEV_FLASH)
+	case DEV_FLASH :
+		return flash_disk_status();
+#endif
+#if defined(DEV_RAM)
+	case DEV_RAM :
+		return ram_disk_status();
 #endif
 	}
 
@@ -60,17 +68,17 @@ DSTATUS disk_initialize (
 )
 {
 	switch (pdrv) {
-#if defined(DEV_RAM)
-	case DEV_RAM :
-		return RAM_MAX();
-#endif
 #if defined(DEV_MMC)
 	case DEV_MMC :
 		return mmc_disk_initialize();
 #endif
-#if defined(DEV_USB)
-	case DEV_USB :
-		return usb_disk_initialize();
+#if defined(DEV_FLASH)
+	case DEV_FLASH :
+		return flash_disk_initialize();
+#endif
+#if defined(DEV_RAM)
+	case DEV_RAM :
+		return ram_disk_initialize();
 #endif
 	}
 
@@ -91,17 +99,17 @@ DRESULT disk_read (
 )
 {
 	switch (pdrv) {
-#if defined(DEV_RAM)
-	case DEV_RAM :
-		return ram_disk_read(buff, sector, count);
-#endif
 #if defined(DEV_MMC)
 	case DEV_MMC :
 		return mmc_disk_read(buff, sector, count);
 #endif
-#if defined(DEV_USB)
-	case DEV_USB :
-		return usb_disk_read(buff, sector, count);
+#if defined(DEV_FLASH)
+	case DEV_FLASH :
+		return flash_disk_read(buff, sector, count);
+#endif
+#if defined(DEV_RAM)
+	case DEV_RAM :
+		return ram_disk_read(buff, sector, count);
 #endif
 	}
 
@@ -124,17 +132,17 @@ DRESULT disk_write (
 )
 {
 	switch (pdrv) {
-#if defined(DEV_RAM)
-	case DEV_RAM :
-		return ram_disk_write(buff, sector, count);
-#endif
 #if defined(DEV_MMC)
 	case DEV_MMC :
 		return mmc_disk_write(buff, sector, count);
 #endif
-#if defined(DEV_USB)
-	case DEV_USB :
-		return usb_disk_write(buff, sector, count);
+#if defined(DEV_FLASH)
+	case DEV_FLASH :
+		return flash_disk_write(buff, sector, count);
+#endif
+#if defined(DEV_RAM)
+	case DEV_RAM :
+		return ram_disk_write(buff, sector, count);
 #endif
 	}
 
@@ -155,17 +163,17 @@ DRESULT disk_ioctl (
 )
 {
 	switch (pdrv) {
-#if defined(DEV_RAM)
-	case DEV_RAM :
-		return ram_disk_ioctl(cmd, buff);
-#endif
 #if defined(DEV_MMC)
 	case DEV_MMC :
 		return mmc_disk_ioctl(cmd, buff);
 #endif
-#if defined(DEV_USB)
-	case DEV_USB :
-		return usb_disk_ioctl(cmd, buff);
+#if defined(DEV_FLASH)
+	case DEV_FLASH :
+		return flash_disk_ioctl(cmd, buff);
+#endif
+#if defined(DEV_RAM)
+	case DEV_RAM :
+		return ram_disk_ioctl(cmd, buff);
 #endif
 	}
 
@@ -179,5 +187,11 @@ void disk_timerproc (void)
 {
 #if defined(DEV_MMC)
 	mmc_disk_timerproc();
+#endif
+#if defined(DEV_FLASH)
+	flash_disk_timerproc();
+#endif
+#if defined(DEV_RAM)
+	ram_disk_timerproc();
 #endif
 }

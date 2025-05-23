@@ -49,21 +49,8 @@
 #endif
 
 
-#ifdef ALLON_SENSOR
-#include "allon_sensor.h"
-
-/** main entry */
-int main(void)
-{
-	board_init();
-	app_main();
-	return 0;
-}
-#endif
-
-
-#ifdef ALLON_SENSOR_MIPI
-#include "allon_sensor_mipi.h"
+#ifdef ALLON_JPEG_ENCODE
+#include "allon_jpeg_encode.h"
 
 /** main entry */
 int main(void)
@@ -88,86 +75,21 @@ int main(void)
 #endif
 
 
+#ifdef ALLON_SENSOR_TFLM_FATFS
+#include "allon_sensor_tflm_fatfs.h"
+
+/** main entry */
+int main(void)
+{
+	board_init();
+	app_main();
+	return 0;
+}
+#endif
+
+
 #ifdef ALLON_SENSOR_TFLM_FREERTOS
 #include "allon_sensor_tflm.h"
-
-/** main entry */
-int main(void)
-{
-	board_init();
-	app_main();
-	return 0;
-}
-#endif
-
-
-#ifdef SCENARIO_DC_SCL_SCH_TZ_S_ONLY
-#include "dc_scl_sch_tz_s_only.h"
-
-/** main entry */
-int main(void)
-{
-	board_init();
-	app_main();
-	return 0;
-}
-#endif
-
-
-#ifdef PDM_SINGLE
-#include "pdm_single.h"
-
-/** main entry */
-int main(void)
-{
-	board_init();
-	app_main();
-	return 0;
-}
-#endif
-
-
-#ifdef INTERNAL_PULL
-#include "set_internal_pull.h"
-
-/** main entry */
-int main(void)
-{
-	board_init();
-	app_main();
-	return 0;
-}
-#endif
-
-
-#ifdef SCENARIO_I2CS_CUST_INT
-#include "i2cs_cust_int.h"
-
-/** main entry */
-int main(void)
-{
-	board_init();
-	app_main();
-	return 0;
-}
-#endif
-
-
-#ifdef SDIO_APP
-#include "sdio_app.h"
-
-/** main entry */
-int main(void)
-{
-	board_init();
-	app_main();
-	return 0;
-}
-#endif
-
-
-#ifdef SEEED_SAMPLE
-#include "seeed_sample.h"
 
 /** main entry */
 int main(void)
@@ -192,19 +114,6 @@ int main(void)
 #endif
 
 
-#ifdef TFLM_EFFICIENTNET_LITE0
-#include "tflm_efficientnet_lite0.h"
-
-/** main entry */
-int main(void)
-{
-	board_init();
-	app_main();
-	return 0;
-}
-#endif
-
-
 #ifdef TFLM_FD_FM
 #include "tflm_fd_fm.h"
 
@@ -217,8 +126,70 @@ int main(void)
 }
 #endif
 
-#ifdef GROVE_VISION_AI
-#include "grove_vision_ai.h"
+
+#ifdef FATFS_TEST
+#include "fatfs_test.h"
+
+/** main entry */
+int main(void)
+{
+	board_init();
+	fatfs_test();
+	return 0;
+}
+#endif
+
+
+#ifdef TFLM_YOLOV8_OD
+#include "tflm_yolov8_od.h"
+
+/** main entry */
+int main(void)
+{
+	board_init();
+	tflm_yolov8_od_app();
+	return 0;
+}
+#endif
+
+#ifdef TFLM_YOLOV8_GENDER_CLS
+#include "tflm_yolov8_gender_cls.h"
+
+/** main entry */
+int main(void)
+{
+	board_init();
+	tflm_yolov8_gender_cls_app();
+	return 0;
+}
+#endif
+
+#ifdef TFLM_YOLO11_OD
+#include "tflm_yolo11_od.h"
+/** main entry */
+int main(void)
+{
+	board_init();
+	tflm_yolo11_od_app();
+	return 0;
+}
+#endif
+
+#ifdef TFLM_YOLOV8_POSE
+#include "tflm_yolov8_pose.h"
+
+/** main entry */
+int main(void)
+{
+	board_init();
+	tflm_yolov8_pose_app();
+	return 0;
+}
+#endif
+
+
+#ifdef TFLM_2IN1_FD_FL_FR_ENROLL_YOLOV8
+#include "tflm_2in1_fd_fl_fr_enroll_yolov8.h"
 
 /** main entry */
 int main(void)
@@ -228,3 +199,124 @@ int main(void)
 	return 0;
 }
 #endif
+
+
+#ifdef PDM_RECORD
+#include "pdm_record.h"
+
+/** main entry */
+int main(void)
+{
+	board_init();
+	app_main();
+	return 0;
+}
+#endif
+
+
+#ifdef IMU_READ_APP
+#include "imu_read_app.h"
+
+/* main entry */
+int main(void)
+{
+	board_init();
+	app_main();
+	return 0;
+}
+#endif
+
+
+#ifdef HELLO_WORLD_CMSIS_DSP
+#include "hello_world_cmsis_dsp.h"
+
+/** main entry */
+int main(void)
+{
+	board_init();
+	app_main();
+	return 0;
+}
+#endif
+
+#ifdef HELLO_WORLD_CMSIS_CV
+#include "hello_world_cmsis_cv.h"
+
+/** main entry */
+int main(void)
+{
+	board_init();
+	app_main();
+	return 0;
+}
+#endif
+
+#ifdef EI_STANDALONE_INFERENCING
+#include "ei_standalone_inferencing.h"
+
+int main(void)
+{
+	board_init();
+	ei_standalone_inferencing_app();
+
+	return 0;
+}
+#endif
+
+#ifdef EI_STANDALONE_INFERENCING_CAMERA
+#include "ei_standalone_inferencing_camera.h"
+
+int main(void)
+{
+	board_init();
+	ei_standalone_inferencing_app();
+
+	return 0;
+}
+#endif
+
+#ifdef EDGE_IMPULSE_FIRMWARE
+#include "edge_impulse_firmware.h"
+
+int main(void)
+{
+	/*set pinmux init*/
+	pinmux_init();
+	/*platform driver init*/
+	platform_driver_init();
+#ifdef IP_uart
+	console_setup(USE_DW_UART_0, UART_BAUDRATE_115200);
+#endif
+#ifdef LIB_COMMON
+	xprintf_setup();
+#endif
+	edge_impulse_app();
+
+	return 0;
+}
+#endif
+
+#ifdef KWS_PDM_RECORD
+#include "kws_pdm_record.h"
+
+/* main entry */
+int main(void)
+{
+	board_init();
+	kws_pdm_record_app();
+	return 0;
+}
+#endif
+
+
+#ifdef TFLM_PEOPLENET
+#include "tflm_peoplenet.h"
+/** main entry */
+int main(void)
+{
+	board_init();
+	tflm_peoplenet_app();
+	return 0;
+}
+#endif
+
