@@ -1,0 +1,5 @@
+app/scenario_app/allon_jpeg_encode/allon_jpeg_encode.c:96:13:app_dplib_cb	16	static
+app/scenario_app/allon_jpeg_encode/allon_jpeg_encode.c:79:6:dp_var_init	32	static
+app/scenario_app/allon_jpeg_encode/allon_jpeg_encode.c:262:6:app_dump_single_jpeginfo	24	static
+app/scenario_app/allon_jpeg_encode/allon_jpeg_encode.c:285:6:app_setup_dplib_4_yuv_then_jpg	96	static
+app/scenario_app/allon_jpeg_encode/allon_jpeg_encode.c:360:5:app_main	8	static

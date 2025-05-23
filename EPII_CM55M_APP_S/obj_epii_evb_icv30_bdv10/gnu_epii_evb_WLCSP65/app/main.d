@@ -27,7 +27,7 @@ obj_epii_evb_icv30_bdv10/gnu_epii_evb_WLCSP65/app/main.o \
  drivers/inc/hx_drv_i3c_slv.h drivers/inc/hx_drv_dmac.h \
  interface/timer_interface.h external/cis/hx_drv_CIS_common.h \
  drivers/inc/BITOPS.h \
- app/scenario_app/allon_sensor_tflm/allon_sensor_tflm.h
+ app/scenario_app/allon_jpeg_encode/allon_jpeg_encode.h
 device/inc/WE2_device.h:
 device/inc/WE2_device_addr.h:
 device/inc/WE2_ARMCM55.h:
@@ -85,4 +85,4 @@ drivers/inc/hx_drv_dmac.h:
 interface/timer_interface.h:
 external/cis/hx_drv_CIS_common.h:
 drivers/inc/BITOPS.h:
-app/scenario_app/allon_sensor_tflm/allon_sensor_tflm.h:
+app/scenario_app/allon_jpeg_encode/allon_jpeg_encode.h:

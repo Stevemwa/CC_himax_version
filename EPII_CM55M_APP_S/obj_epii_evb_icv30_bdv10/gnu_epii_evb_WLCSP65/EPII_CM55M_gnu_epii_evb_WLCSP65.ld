@@ -2,10 +2,11 @@ MEMORY
 {
   CM55M_S_APP_ROM (rx) : ORIGIN = 0x10000000, LENGTH = 0x40000
   CM55M_S_APP_DATA (rwx) : ORIGIN = 0x30000000, LENGTH = 0x40000
-  CM55M_S_SRAM (rwx) : ORIGIN = ((0x34001000 +0x00004000)+0x0001A000), LENGTH = 0x00200000-(((0x34001000 +0x00004000)+0x0001A000)-(0x34000000))
+  CM55M_S_SRAM01 (rwx) : ORIGIN = ((0x34001000 +0x00004000)+0x0001A000), LENGTH = 0x00200000-(((0x34001000 +0x00004000)+0x0001A000)-(0x34000000))
+  CM55M_S_SRAM2 (rwx) : ORIGIN = 0x36000000, LENGTH = 0x00060000
 }
-__HEAP_SIZE = 0x10000;
-__STACK_SIZE = 0x10000;
+__HEAP_SIZE = 0x2000;
+__STACK_SIZE = 0x4000;
 ENTRY(Reset_Handler)
 SECTIONS
 {
@@ -29,11 +30,6 @@ SECTIONS
         __syscalls_flash_end__ = (. - 1);
         __unprivileged_flash_start__ = .;
     } > CM55M_S_APP_ROM
-    .text_2 : ALIGN(4)
-    {
-        *libdriver.*:*(.text* .rodata*)
-        *cvapp.o (.text* .rodata*)
-    } > CM55M_S_SRAM
     .text : ALIGN(4)
     {
        *(.text*)
@@ -54,21 +50,12 @@ SECTIONS
         . = ALIGN(4);
         KEEP(*(.eh_frame*))
     } > CM55M_S_APP_ROM
-    .model : ALIGN(4)
-    {
-        *person_detect_model_data_vela.o*(.text* .rodata*)
-    } > CM55M_S_SRAM
-    .noinit (NOLOAD): ALIGN(4)
-    {
-        *(.bss.NoInit*)
-        *(.noinit*)
-    } > CM55M_S_SRAM
     .rodata : ALIGN(4)
     {
         __rodata_start = .;
         *(.rodata .rodata.* .constdata .constdata.*)
         __rodata_end = .;
-    } > CM55M_S_APP_DATA
+    } > CM55M_S_APP_ROM
     .ARM.extab : ALIGN(4)
     {
         *(.ARM.extab* .gnu.linkonce.armextab.*)
@@ -79,6 +66,14 @@ SECTIONS
         *(.ARM.exidx* .gnu.linkonce.armexidx.*)
         __exidx_end = .;
     } > CM55M_S_APP_ROM
+    .noinitbuf (NOLOAD): ALIGN(4)
+    {
+     *(.bss.NoInit*)
+    } > CM55M_S_SRAM01
+    .noinitbuf2 (NOLOAD): ALIGN(4)
+    {
+      *(.bss.NoIni2*)
+    } > CM55M_S_SRAM2
    .copy.table :
    {
      . = ALIGN(4);
