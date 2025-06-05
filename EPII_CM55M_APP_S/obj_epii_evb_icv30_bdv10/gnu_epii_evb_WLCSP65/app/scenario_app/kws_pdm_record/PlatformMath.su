@@ -1,0 +1,12 @@
+app/scenario_app/kws_pdm_record/PlatformMath.cc:25:11:static float arm::app::math::MathUtils::CosineF32(float)	0	static
+app/scenario_app/kws_pdm_record/PlatformMath.cc:34:11:static float arm::app::math::MathUtils::SineF32(float)	0	static
+app/scenario_app/kws_pdm_record/PlatformMath.cc:43:11:static float arm::app::math::MathUtils::SqrtF32(float)	0	static
+app/scenario_app/kws_pdm_record/PlatformMath.cc:54:11:static float arm::app::math::MathUtils::MeanF32(float*, uint32_t)	16	static
+app/scenario_app/kws_pdm_record/PlatformMath.cc:70:11:static float arm::app::math::MathUtils::StdDevF32(float*, uint32_t, float)	16	static
+app/scenario_app/kws_pdm_record/PlatformMath.cc:98:10:static void arm::app::math::MathUtils::FftInitF32(uint16_t, arm::app::math::FftInstance&, arm::app::math::FftType)	16	static
+app/scenario_app/kws_pdm_record/PlatformMath.cc:187:10:static void arm::app::math::MathUtils::FftF32(std::vector<float>&, std::vector<float>&, arm::app::math::FftInstance&)	80	static
+app/scenario_app/kws_pdm_record/PlatformMath.cc:236:10:static void arm::app::math::MathUtils::VecLogarithmF32(std::vector<float>&, std::vector<float>&)	0	static
+app/scenario_app/kws_pdm_record/PlatformMath.cc:250:11:static float arm::app::math::MathUtils::DotProductF32(float*, float*, uint32_t)	16	static
+app/scenario_app/kws_pdm_record/PlatformMath.cc:266:10:static bool arm::app::math::MathUtils::ComplexMagnitudeSquaredF32(float*, uint32_t, float*, uint32_t)	8	static
+app/scenario_app/kws_pdm_record/PlatformMath.cc:288:10:static void arm::app::math::MathUtils::SoftmaxF32(std::vector<float>&)	32	static
+app/scenario_app/kws_pdm_record/PlatformMath.cc:306:11:static float arm::app::math::MathUtils::SigmoidF32(float)	8	static

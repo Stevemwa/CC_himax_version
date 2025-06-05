@@ -1,0 +1,2 @@
+library/cmsis_dsp/Source/TransformFunctions_Used/arm_cfft_init_f32.c:61:12:arm_cfft_radix4by2_rearrange_twiddles_f32	88	static
+library/cmsis_dsp/Source/TransformFunctions_Used/arm_cfft_init_f32.c:147:12:arm_cfft_init_f32	8	static

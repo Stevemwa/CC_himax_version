@@ -1,0 +1,6 @@
+app/scenario_app/kws_pdm_record/kws_pdm_record.c:142:6:kws_processing_callback	0	static
+app/scenario_app/kws_pdm_record/kws_pdm_record.c:123:6:app_pdm_dma_rx_cb	4	static
+app/scenario_app/kws_pdm_record/kws_pdm_record.c:88:6:spi_m_pinmux_cfg	0	static
+app/scenario_app/kws_pdm_record/kws_pdm_record.c:106:6:pinmux_init	64	static
+app/scenario_app/kws_pdm_record/kws_pdm_record.c:146:5:app_pdm_setting	12	static
+app/scenario_app/kws_pdm_record/kws_pdm_record.c:372:5:kws_pdm_record_app	32056	static

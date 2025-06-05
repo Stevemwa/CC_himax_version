@@ -1,0 +1,18 @@
+app/scenario_app/kws_pdm_record/Mfcc.cc:212:11:virtual float arm::app::audio::MFCC::GetMelFilterBankNormaliser(const float&, const float&, bool)	0	static
+app/scenario_app/kws_pdm_record/Mfcc.cc:162:10:virtual void arm::app::audio::MFCC::ConvertToLogarithmicScale(std::vector<float>&)	32	static
+app/scenario_app/kws_pdm_record/Mfcc.cc:128:10:virtual bool arm::app::audio::MFCC::ApplyMelFilterBank(std::vector<float>&, std::vector<std::vector<float> >&, std::vector<long unsigned int>&, std::vector<long unsigned int>&, std::vector<float>&)	56	static
+app/scenario_app/kws_pdm_record/Mfcc.cc:188:24:virtual std::vector<float> arm::app::audio::MFCC::CreateDCTMatrix(int32_t, int32_t)	48	static
+app/scenario_app/kws_pdm_record/Mfcc.cc:28:5:arm::app::audio::MfccParams::MfccParams(float, uint32_t, float, float, uint32_t, uint32_t, bool)	16	static
+app/scenario_app/kws_pdm_record/Mfcc.cc:48:10:void arm::app::audio::MfccParams::Log() const	0	static
+app/scenario_app/kws_pdm_record/Mfcc.cc:61:5:arm::app::audio::MFCC::MFCC(const arm::app::audio::MfccParams&)	56	static
+app/scenario_app/kws_pdm_record/Mfcc.cc:93:11:static float arm::app::audio::MFCC::MelScale(float, bool)	8	static
+app/scenario_app/kws_pdm_record/Mfcc.cc:109:11:static float arm::app::audio::MFCC::InverseMelScale(float, bool)	8	static
+app/scenario_app/kws_pdm_record/Mfcc.cc:169:10:void arm::app::audio::MFCC::ConvertToPowerSpectrum()	24	static
+app/scenario_app/kws_pdm_record/Mfcc.cc:238:10:bool arm::app::audio::MFCC::IsMelFilterBankInited() const	0	static
+/home/mwas/conservacam/arm-gnu-toolchain-13.2.Rel1-x86_64-arm-none-eabi/arm-none-eabi/include/c++/13.2.1/bits/vector.tcc:445:7:) [with _Args = {const float&}; _Tp = float; _Alloc = std::allocator<float>]	48	static
+app/scenario_app/kws_pdm_record/Mfcc.cc:321:37:std::vector<std::vector<float> > arm::app::audio::MFCC::CreateMelFilterBank()	128	static
+app/scenario_app/kws_pdm_record/Mfcc.cc:226:10:0()	40	static
+app/scenario_app/kws_pdm_record/Mfcc.cc:226:10:void arm::app::audio::MFCC::InitMelFilterBank()	0	static
+app/scenario_app/kws_pdm_record/Mfcc.cc:87:10:void arm::app::audio::MFCC::Init()	0	static
+app/scenario_app/kws_pdm_record/Mfcc.cc:244:10:void arm::app::audio::MFCC::MfccComputePreFeature(const std::vector<short int>&)	48	static
+app/scenario_app/kws_pdm_record/Mfcc.cc:296:24:std::vector<float> arm::app::audio::MFCC::MfccCompute(const std::vector<short int>&)	40	static

@@ -1,0 +1,2 @@
+library/cmsis_dsp/Source/FastMathFunctions/arm_vlog_q15.c:131:9:vlogq_q15	20	static
+library/cmsis_dsp/Source/FastMathFunctions/arm_vlog_q15.c:223:6:arm_vlog_q15	48	static

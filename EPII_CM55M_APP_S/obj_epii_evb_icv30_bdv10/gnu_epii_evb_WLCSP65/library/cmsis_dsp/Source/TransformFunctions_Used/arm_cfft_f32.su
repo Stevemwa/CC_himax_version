@@ -1,0 +1,4 @@
+library/cmsis_dsp/Source/TransformFunctions_Used/arm_cfft_f32.c:39:18:arm_inverse_fft_length_f32	0	static
+library/cmsis_dsp/Source/TransformFunctions_Used/arm_cfft_f32.c:300:13:_arm_radix4_butterfly_inverse_f32_mve	168	static
+library/cmsis_dsp/Source/TransformFunctions_Used/arm_cfft_f32.c:92:13:_arm_radix4_butterfly_f32_mve	152	static
+library/cmsis_dsp/Source/TransformFunctions_Used/arm_cfft_f32.c:531:6:arm_cfft_f32	80	static

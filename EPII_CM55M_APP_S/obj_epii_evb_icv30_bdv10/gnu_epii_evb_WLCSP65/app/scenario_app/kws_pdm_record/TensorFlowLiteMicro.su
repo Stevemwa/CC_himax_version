@@ -1,0 +1,2 @@
+app/scenario_app/kws_pdm_record/TensorFlowLiteMicro.cc:19:6:void PrintTensorFlowVersion()	0	static
+app/scenario_app/kws_pdm_record/TensorFlowLiteMicro.cc:22:23:arm::app::QuantParams arm::app::GetTensorQuantParams(TfLiteTensor*)	0	static
